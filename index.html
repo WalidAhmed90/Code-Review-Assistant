@@ -61,7 +61,12 @@
                 </p>
             </div>
             <div class="flex gap-2">
-                <button onclick="saveApiKey()" class="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 transition font-medium">Save Key</button>
+                <button onclick="saveApiKey()" class="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 transition font-medium">Save Key</button><div style="margin-top: 10px;">
+    
+    <button onclick="copyApiKey()">Copy</button>
+</div>
+
+<p id="apiStatus" style="color: green; font-size: 12px;"></p>
                 <button onclick="clearApiKey()" class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition font-medium">Clear Key</button>
             </div>
         </div>
@@ -99,6 +104,28 @@
             python: `def find_user(users, user_id):\n    for user in users:\n        if user['id'] == user_id:\n            return user\n    return None`,
             react: `import React from 'react';\n\nfunction UserProfile({ user }) {\n  return (\n    <div style={{padding: '20px'}}>\n      <h1>{user.name}</h1>\n      <button onClick={() => alert('Hello')}>Greet</button>\n    </div>\n  );\n}`
         };
+
+
+// Copy API key
+function copyApiKey() {
+    const keyInput = document.getElementById("apiKeyInput");
+
+    if (!keyInput.value) {
+        alert("No API key to copy");
+        return;
+    }
+
+    keyInput.select();
+    keyInput.setSelectionRange(0, 99999);
+
+    navigator.clipboard.writeText(keyInput.value)
+        .then(() => {
+            document.getElementById("apiStatus").innerText = "API Key Copied";
+        })
+        .catch(() => {
+            alert("Failed to copy");
+        });
+}
 
         // --- Logic ---
 
